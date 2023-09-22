@@ -3,8 +3,10 @@ import { Stripe } from "stripe";
 
 export async function POST(request) {
   const { priceId } = await request.json();
+  console.log(priceId)
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  console.log(stripe)
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
@@ -18,7 +20,7 @@ export async function POST(request) {
     success_url: "http://localhost:3000/success",
     cancel_url: "http://localhost:3000/pricing",
   });
-
+  console.log(session)
   return NextResponse.json({
     url: session.url,
   });
